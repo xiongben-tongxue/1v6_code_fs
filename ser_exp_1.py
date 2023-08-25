@@ -6,6 +6,8 @@ from sklearn.metrics import confusion_matrix
 from utilz import *
 import numpy as np
 
+
+# Model 1
 acoustic = load_features('C:/Test/MSA Datasets/data/acoustic_wav2vec.pkl')
 label = load_features('C:/Test/MSA Datasets/data/labels.pkl')
 
