@@ -13,5 +13,15 @@ h = tf.keras.layers.LSTM(32, dropout=0.5)(x)
 res = tf.keras.layers.Dense(3, 'softmax')(h)
 
 model = tf.keras.Model(inputs=x, outputs=res)
-model.compile(optimizer='Adam', loss=tf.keras.losses.SparseCategoricalCrossentropy)
+model.compile(optimizer='Adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False))
 model.summary()
+print(model.summary())
+output_layer = model.layers[-1]
+print(output_layer.activation)
+
+
+
+callback_list = [tf.keras.callbacks.ModelCheckpoint(filepath='C:/Test/MSA Datasets/res_tmp/model.tf', monitor='val_loss', save_best_only=True, save_freq='epoch')]
+model.fit(x=np.asarray(acoustic['train']), y=np.asarray(label['train']), batch_size=16, epochs=30,
+          validation_data=[np.asarray(acoustic['valid']), np.asarray(label['valid'])],
+          callbacks=callback_list)
