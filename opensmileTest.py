@@ -5,5 +5,5 @@ smile = opensmile.Smile(
     feature_level=opensmile.FeatureLevel.LowLevelDescriptors,
 )
 
-sml_fs = smile.process_file('C:/Test/0001.mp4')
+sml_fs = smile.process_file('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/Raw/video_0001/0001.mp4')
 print(sml_fs.shape)

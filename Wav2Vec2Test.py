@@ -4,7 +4,7 @@ import project_function
 from transformers import Wav2Vec2Processor, Wav2Vec2Model, Wav2Vec2ForCTC
 
 # 使用函数提取音频
-video_path = "C:/Test/0001.mp4"
+video_path = "/Users/wangdong/WorkSpace/MSA Datasets/SIMS/Raw/video_0001/0001.mp4"
 audio_output_path = "C:/Test/0001.wav"
 #project_function.extract_audio_from_video(video_path, audio_output_path)
 
