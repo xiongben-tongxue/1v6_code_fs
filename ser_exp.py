@@ -1,4 +1,9 @@
 import tensorflow as tf
+
+from keras.src.layers import Bidirectional, Attention
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+
 from utilz import *
 import numpy as np
 
@@ -26,3 +31,15 @@ callback_list = [tf.keras.callbacks.ModelCheckpoint(filepath='/Users/wangdong/Wo
 model.fit(x=np.asarray(acoustic['train']), y=np.asarray(label['train']), batch_size=16, epochs=30,
           validation_data=[np.asarray(acoustic['valid']), np.asarray(label['valid'])],
           callbacks=callback_list)
+
+model = tf.keras.models.load_model('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/res_tmp/model.tf')
+pred = model.predict(np.asarray(acoustic['test']))
+predicted_test_labels = pred.argmax(axis=1)
+nuneric_test_labels = np.array(label('test'))
+
+eval_res = classification_report(nuneric_test_labels, predicted_test_labels,
+                                 target_names=['Neg', 'Pos', 'Neu'],
+                                 digits=4, output_dict=False)
+print(eval_res)
+cm = confusion_matrix(y_true=nuneric_test_labels.tolist(), y_pred=predicted_test_labels.tolist())
+print(cm)
