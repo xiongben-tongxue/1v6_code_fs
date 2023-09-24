@@ -47,9 +47,9 @@ def get_speech_feature(file, mode, max_len=128):
 
 MODE = 'wav2vec'
 
-#下面两个文件中的视频，应当要和表格中的数据保持一致
-video_path = '/Users/wangdong/WorkSpace/MSA Datasets/SIMS/Raw1/'
-video_ids, clip_ids, texts, annotations, modes = load_data('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/label1.csv')
+#下面这两个文件，必须要跑完整，因为后面要用，如果跑不完整，结果就不会很好
+video_path = '/Users/wangdong/WorkSpace/MSA Datasets/SIMS/Raw/'
+video_ids, clip_ids, texts, annotations, modes = load_data('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/label.csv')
 
 # 初始化一些字典和列表，用于存储提取到的特征和标签
 acoustic = {'train': [], 'valid': [], 'test': []}
@@ -66,5 +66,6 @@ for video_id, clip_id, annotation, mode in zip(video_ids, clip_ids, annotations,
     acoustic[mode].append(get_speech_feature(file_path, mode=MODE))
     labels[mode].append(label_dict[annotation])
 
+# 我这里因为数据没有跑完整，导致在后面的训练集中数据的模型不太好，现在将windows系统中跑完的数据集拿过来用
 save_features(acoustic, '/Users/wangdong/WorkSpace/MSA Datasets/SIMS/data/acoustic_wav2vec.pkl')
 save_features(labels, '/Users/wangdong/WorkSpace/MSA Datasets/SIMS/data/labels.pkl')
