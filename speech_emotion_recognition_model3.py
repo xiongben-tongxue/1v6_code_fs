@@ -8,6 +8,8 @@ from sklearn.metrics import classification_report, confusion_matrix
 acoustic = load_features('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/data/acoustic_wav2vec.pkl')
 label = load_features('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/data/labels.pkl')
 
+# 使用了自定义的Attention_Self层来实现自注意力机制
+# 在输入序列上进行自注意力计算，每个时间步的输出都是基于整个输入序列的加权和。
 class Attention_Self(tf.keras.layers.Layer):
     def __init__(self, units, **kwargs):
         super(Attention_Self, self).__init__(**kwargs)
@@ -33,7 +35,7 @@ class Attention_Self(tf.keras.layers.Layer):
 # 模型3 (Att-BLSTM)：
 # 输入层
 # 一维卷积层 (Conv1D)
-# 自注意力层 (Self Attention)  是与模型1和模型2最主要的区别。
+# 自定义注意力层 (Self Attention)  是与模型1和模型2最主要的区别。
 # 自注意力机制可以帮助模型在序列数据中识别和利用不同时间步之间的依赖关系，对于处理自然语言和声学信号等序列数据来说，这是一种非常有用的机制。
 # 定义了一个名为Attention_Self的自定义层，该层实现了自注意力机制。在模型的构建过程中，该自注意力层被插入到了一维卷积层和双向LSTM层之间，用于对卷积层输出的特征进行进一步的处理和加权。
 # 三个模型都是针对时序数据设计的，但它们使用了不同的层和结构来提取特征和建模时序依赖性，其中模型3引入了自注意力机制，可能会有更好的性能
