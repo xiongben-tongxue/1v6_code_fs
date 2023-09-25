@@ -7,8 +7,12 @@ from sklearn.metrics import classification_report, confusion_matrix
 acoustic = load_features('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/data/acoustic_wav2vec.pkl')
 label = load_features('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/data/labels.pkl')
 
+#模型2 (CNN-BLSTM)：
+# 输入层
+# 一维卷积层 (Conv1D)
+# 双向LSTM层
+# Dense输出层
 x = tf.keras.layers.Input((128,512))
-
 # 这个模型在双向LSTM层前增加了一个一维卷积层（Conv1D），形成了CNN-BLSTM的结构。
 # 这一结构可以在序列数据中捕获更丰富的局部特征，并将这些特征输入到BLSTM层进行序列建模。
 # 增强了模型在处理声学信号这类时序数据时的特征提取能力。

@@ -15,6 +15,11 @@ from sklearn.metrics import classification_report, confusion_matrix
 acoustic = load_features('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/data/acoustic_wav2vec.pkl')
 label = load_features('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/data/labels.pkl')
 
+
+# 模型1 (BLSTM)：
+# 输入层
+# 双向LSTM层
+# Dense输出层
 x = tf.keras.layers.Input((128,512))
 h = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(32, dropout=0.3))(x)
 res = tf.keras.layers.Dense(3, 'softmax')(h)
