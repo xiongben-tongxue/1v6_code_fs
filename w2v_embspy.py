@@ -12,8 +12,13 @@ label = load_features('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/data/labels.p
 
 
 # 应该将Input层的参数更改为适当的3维格式
-x = tf.keras.layers.Input(shape=(36, 100))
-h = tf.keras.layers.LSTM(64, return_sequences=False, return_state=False)(x)
+x = tf.keras.layers.Input(shape=(36, 768))
+# 通过注意力机制来进行优化 accuracy是0.5492也没有明显的优化
+x = tf.keras.layers.Attention()([x,x])
+# 可以对h进行优化，将其变成双向Bidirectional:accuracy是0.5602。没有明显的提升
+h = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(64, return_sequences=False, return_state=False))(x)
+#单向的accuracy是0.5558
+#h = tf.keras.layers.LSTM(64, return_sequences=False, return_state=False)(x)
 res = tf.keras.layers.Dense(3, 'softmax')(h)
 
 model = tf.keras.Model(inputs=x, outputs=res)
