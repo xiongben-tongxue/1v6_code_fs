@@ -3,7 +3,7 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
     <content url="file://$MODULE_DIR$/../MSA Datasets" />
-    <orderEntry type="jdk" jdkName="dev310" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="myenv310" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

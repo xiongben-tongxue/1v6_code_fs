@@ -11,10 +11,10 @@ logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 # 定义视频路径
-video_path = '/Users/wangdong/WorkSpace/MSA Datasets/SIMS/Raw/'
+video_path = 'C:/Test/MSA Datasets/SIMS/Raw/'
 logging.info(f"Set video path to {video_path}")
 
-video_ids, clip_ids, texts, annotations, modes = load_data('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/label.csv')
+video_ids, clip_ids, texts, annotations, modes = load_data('C:/Test/MSA Datasets/SIMS/label.csv')
 logging.info(f"Loaded data for {len(video_ids)} videos")
 
 # https://github.com/openai/CLIP
@@ -52,7 +52,7 @@ with torch.no_grad():
         visual[mode].append(image_features[:max_len])
 
 
-save_path = '/Users/wangdong/WorkSpace/MSA Datasets/SIMS/data/visual_clip.pkl'
+save_path = 'C:/Test/MSA Datasets/SIMS/data/visual_clip.pkl'
 save_features(visual, save_path)
 logging.info(f"Saved features to {save_path}")
 
