@@ -13,7 +13,7 @@ print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('
 
 #多模态的融合
 # 处理视觉
-visual_clip = load_features('./data/visual_clip.pkl')
+visual_clip = load_features('C:/Test/MSA Datasets/SIMS/data/visual_clip.pkl')
 # 处理语音
 acoustic = load_features('./data/acoustic_wav2vec.pkl')
 # 处理文字

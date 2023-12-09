@@ -2,7 +2,8 @@ import os
 import torch
 import numpy as np
 import librosa
-import opensmile
+# import opensmile
+# import transformers as tf
 from transformers import Wav2Vec2Processor, Wav2Vec2Model, Wav2Vec2ForCTC
 from utilz import *
 
@@ -25,13 +26,13 @@ def get_speech_feature(file, mode, max_len=128):
             mel_spec = np.concatenate([mel_spec, np.zeros((max_len - len(mel_spec), 128))], axis=0)
         return mel_spec[:max_len]  # (128,128)
 
-    elif mode == 'opensmile':
-        smile = opensmile.Smile(feature_set=opensmile.FeatureSet.ComParE_2016,
-                                feature_level=opensmile.FeatureLevel.LowLevelDescriptors)
-        sml_fs = smile.process_file(file)
-        if len(sml_fs) < max_len * 2:
-            sml_fs = np.concatenate([sml_fs, np.zeros((max_len * 2 - len(sml_fs), 65))], axis=0)
-        return sml_fs[:max_len * 2]  # (256,65)
+    # elif mode == 'opensmile':
+    #     smile = opensmile.Smile(feature_set=opensmile.FeatureSet.ComParE_2016,
+    #                             feature_level=opensmile.FeatureLevel.LowLevelDescriptors)
+    #     sml_fs = smile.process_file(file)
+    #     if len(sml_fs) < max_len * 2:
+    #         sml_fs = np.concatenate([sml_fs, np.zeros((max_len * 2 - len(sml_fs), 65))], axis=0)
+    #     return sml_fs[:max_len * 2]  # (256,65)
 
     elif mode == 'wav2vec':
         y, sr = librosa.load(file, sr=16000)
@@ -48,8 +49,10 @@ def get_speech_feature(file, mode, max_len=128):
 MODE = 'wav2vec'
 
 #下面这两个文件，必须要跑完整，因为后面要用，如果跑不完整，结果就不会很好
-video_path = '/Users/wangdong/WorkSpace/MSA Datasets/SIMS/Raw/'
-video_ids, clip_ids, texts, annotations, modes = load_data('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/label.csv')
+# video_path = '/Users/wangdong/WorkSpace/MSA Datasets/SIMS/Raw/'
+video_path = 'C:/Test/MSA Datasets/SIMS/Raw/'
+# video_ids, clip_ids, texts, annotations, modes = load_data('/Users/wangdong/WorkSpace/MSA Datasets/SIMS/label.csv')
+video_ids, clip_ids, texts, annotations, modes = load_data('C:/Test/MSA Datasets/SIMS/label.csv')
 
 # 初始化一些字典和列表，用于存储提取到的特征和标签
 acoustic = {'train': [], 'valid': [], 'test': []}
@@ -67,5 +70,5 @@ for video_id, clip_id, annotation, mode in zip(video_ids, clip_ids, annotations,
     labels[mode].append(label_dict[annotation])
 
 # 我这里因为数据没有跑完整，导致在后面的训练集中数据的模型不太好，现在将windows系统中跑完的数据集拿过来用
-save_features(acoustic, '/Users/wangdong/WorkSpace/MSA Datasets/SIMS/data/acoustic_wav2vec.pkl')
-save_features(labels, '/Users/wangdong/WorkSpace/MSA Datasets/SIMS/data/labels.pkl')
+save_features(acoustic, 'C:/Test/MSA Datasets/SIMS/data/acoustic_wav2vec.pkl')
+save_features(labels, 'C:/Test/MSA Datasets/SIMS/data/labels.pkl')
